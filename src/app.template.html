@@ -1,0 +1,411 @@
+<title>مراجع الحفظ</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap">
+<style>
+/* Layout: one-screen app, RTL. Top bar with tabs; the Quran text in the official Madinah mushaf face, UI in a plain Arabic sans. */
+@font-face{font-family:"Hafs";src:url(data:font/ttf;base64,__FONT__) format("truetype");font-display:swap}
+:root{
+  --bg:#f7f5ee; --surface:#ffffff; --surface2:#efede4; --fg:#1f2a24; --muted:#6b756f; --line:#d9d6c9;
+  --accent:#1f6b4a; --accent-fg:#ffffff; --accent-soft:#e2efe7;
+  --again:#b23b3b; --hard:#c2731c; --good:#1f6b4a; --easy:#2a6fa8;
+  --s0:#d8d5c8; --s1:#e0776f; --s2:#e8a75a; --s3:#a8c66c; --s4:#3f9a66;
+  --ui:"IBM Plex Sans Arabic",system-ui,"Segoe UI",Tahoma,sans-serif;
+  --quran:"Hafs","Amiri","Scheherazade New","Noto Naskh Arabic",serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141916; --surface:#1d2420; --surface2:#242d27; --fg:#eae8dd; --muted:#9aa59e; --line:#34403a;
+  --accent:#5fb98a; --accent-fg:#0f1a14; --accent-soft:#223a2d;
+  --again:#e06b6b; --hard:#e3a04f; --good:#5fb98a; --easy:#6fb0e8;
+  --s0:#2e3732; --s1:#a04a44; --s2:#b7813c; --s3:#7d9a48; --s4:#3f9a66; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141916; --surface:#1d2420; --surface2:#242d27; --fg:#eae8dd; --muted:#9aa59e; --line:#34403a;
+  --accent:#5fb98a; --accent-fg:#0f1a14; --accent-soft:#223a2d;
+  --again:#e06b6b; --hard:#e3a04f; --good:#5fb98a; --easy:#6fb0e8;
+  --s0:#2e3732; --s1:#a04a44; --s2:#b7813c; --s3:#7d9a48; --s4:#3f9a66; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--ui);font-size:15px;line-height:1.6;direction:rtl}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+button{font:inherit;color:inherit;cursor:pointer;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:8px 14px}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button.primary{background:var(--accent);color:var(--accent-fg);border-color:var(--accent);font-weight:600}
+button.ghost{background:transparent}
+button:disabled{opacity:.45;cursor:default}
+select,input[type=number]{font:inherit;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 10px}
+.app{display:flex;flex-direction:column;min-height:100%}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line);
+  padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px));padding-block:8px}
+.brand{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.brand h1{font-size:18px;margin:0;font-weight:700}
+.brand .sub{color:var(--muted);font-size:13px}
+nav{display:flex;gap:6px;margin-top:8px;overflow-x:auto;scrollbar-width:none}
+nav button{white-space:nowrap;border-radius:999px;padding:6px 14px;background:transparent}
+nav button[aria-selected="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:600}
+main{flex:1;padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px));padding-block:16px 40px;max-width:900px;width:100%;margin:0 auto}
+section[hidden]{display:none}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+.stack{display:grid;gap:14px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.stat{background:var(--surface2);border-radius:12px;padding:12px 14px}
+.stat b{display:block;font-size:26px;font-variant-numeric:tabular-nums;line-height:1.2}
+.stat span{color:var(--muted);font-size:13px}
+.quran{font-family:var(--quran);font-size:26px;line-height:2.1;text-align:justify;text-align-last:right}
+.quran .n{font-family:var(--quran);color:var(--accent);font-size:.75em;margin:0 4px}
+.quran .ay{transition:filter .2s}
+.quran .ay.hid{filter:blur(9px);cursor:pointer;user-select:none}
+.cue{font-family:var(--quran);font-size:30px;line-height:2;text-align:center;padding:18px 8px}
+.meta{color:var(--muted);font-size:13px}
+.dedication{border-top:1px solid var(--line);margin-top:24px;padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px));padding-block:20px 28px;max-width:720px;margin-inline:auto;text-align:center;color:var(--muted);font-size:13.5px}
+.dedication p{margin:10px 0 0;line-height:1.9}
+.dedication b{color:var(--fg)}
+.grades{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.grades button{padding:12px 6px;border-width:2px;font-weight:600;display:grid;gap:2px}
+.grades button small{font-weight:400;color:var(--muted);font-size:12px}
+.grades .again{border-color:var(--again);color:var(--again)}.grades .hard{border-color:var(--hard);color:var(--hard)}
+.grades .good{border-color:var(--good);color:var(--good)}.grades .easy{border-color:var(--easy);color:var(--easy)}
+.heat{display:grid;grid-template-columns:repeat(auto-fill,minmax(26px,1fr));gap:3px}
+.heat button{aspect-ratio:1;padding:0;border:none;border-radius:4px;font-size:9px;color:transparent;min-width:0}
+.heat button:hover,.heat button:focus-visible{color:var(--fg);outline:2px solid var(--fg)}
+.s0{background:var(--s0)}.s1{background:var(--s1)}.s2{background:var(--s2)}.s3{background:var(--s3)}.s4{background:var(--s4)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-left:4px}
+.surahs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+.surahs button{text-align:right;padding:8px 10px;display:flex;justify-content:space-between;gap:6px}
+.surahs button span{color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+.pager{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.toast{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));inset-inline:0;margin:auto;width:max-content;max-width:90%;background:var(--fg);color:var(--bg);padding:8px 16px;border-radius:999px;font-size:13px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:20}
+.toast.show{opacity:1}
+.pill{display:inline-block;background:var(--surface2);border-radius:999px;padding:2px 10px;font-size:12px;color:var(--muted)}
+details summary{cursor:pointer;font-weight:600}
+.help p{margin:6px 0}
+.list{display:grid;gap:8px}
+.list .item{background:var(--surface2);border-radius:10px;padding:10px 12px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-width:480px){.quran{font-size:22px}.cue{font-size:25px}.grades button{padding:10px 4px;font-size:13px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="app">
+<header>
+  <div class="brand"><h1>مراجع الحفظ</h1><span class="sub">مصحف المدينة · ٦٠٤ صفحات · تكرار متباعد</span></div>
+  <nav role="tablist">
+    <button role="tab" data-tab="today" aria-selected="true">اليوم</button>
+    <button role="tab" data-tab="review">المراجعة</button>
+    <button role="tab" data-tab="test">اختبارات</button>
+    <button role="tab" data-tab="mushaf">المصحف</button>
+    <button role="tab" data-tab="map">الخريطة</button>
+    <button role="tab" data-tab="settings">الإعدادات</button>
+  </nav>
+</header>
+<main>
+
+<section id="tab-today" class="stack">
+  <div class="stats">
+    <div class="stat"><b id="st-due">0</b><span>صفحة مستحقة اليوم</span></div>
+    <div class="stat"><b id="st-new">0</b><span>صفحة لم تُراجَع بعد</span></div>
+    <div class="stat"><b id="st-done">0</b><span>راجعتها اليوم</span></div>
+    <div class="stat"><b id="st-streak">0</b><span>أيام متتالية</span></div>
+    <div class="stat"><b id="st-strong">0%</b><span>من المصحف ثابت (≥ ٣ أسابيع)</span></div>
+  </div>
+  <div class="card stack">
+    <div class="row" style="justify-content:space-between">
+      <div><b>جلسة اليوم</b><div class="meta" id="today-desc"></div></div>
+      <button class="primary" id="btn-start">ابدأ المراجعة</button>
+    </div>
+    <div id="today-list" class="list"></div>
+  </div>
+  <details class="card help">
+    <summary>كيف تعمل الطريقة؟</summary>
+    <p><b>التكرار المتباعد (Spaced Repetition):</b> كل صفحة لها موعد مراجعة. إذا سمّعتها بسهولة يبتعد موعدها القادم (يوم، ثم ٤ أيام، ثم أسبوعان، ثم شهر...). إذا تعثرت يرجع الموعد لليوم التالي. النتيجة: وقتك يذهب للصفحات الضعيفة لا للقوية. هذه خوارزمية SM-2 نفسها التي تعتمدها برامج مثل Anki.</p>
+    <p><b>الاسترجاع النشط (Active Recall):</b> لا تقرأ الصفحة ثم تقول "أعرفها". ترى أول كلمات الصفحة فقط، تسمّعها كاملة من ذاكرتك، ثم تكشفها وتصحح. التقييم الصادق هو كل شيء: "نسيت" ليست عيباً، هي ما يجعل الجدول دقيقاً.</p>
+    <p><b>التداخل (Interleaving):</b> اختبارات "المتشابهات" و"ما بعدها" تخلط المواضع حتى لا يعتمد حفظك على ترتيب الصفحة فقط.</p>
+    <p><b>الاقتراح:</b> ابدأ بحد يومي ٢٠ صفحة (جزء) حتى تمرّ على المصحف كله خلال شهر، ثم ستجد أن الجدول يخفّف الحمل تلقائياً للصفحات الثابتة.</p>
+  </details>
+</section>
+
+<section id="tab-review" class="stack" hidden>
+  <div class="card stack" id="rv-card">
+    <div class="row" style="justify-content:space-between">
+      <div><span class="pill" id="rv-pos"></span> <span class="pill" id="rv-info"></span></div>
+      <button class="ghost" id="rv-skip">تخطي</button>
+    </div>
+    <div id="rv-cue" class="cue"></div>
+    <div class="meta" id="rv-hint" style="text-align:center">سمّع الصفحة كاملة من ذاكرتك ثم اكشفها</div>
+    <div class="row" style="justify-content:center"><button class="primary" id="rv-reveal">اكشف الصفحة</button></div>
+    <div id="rv-text" class="quran" hidden></div>
+    <div class="grades" id="rv-grades" hidden>
+      <button class="again" data-q="0">نسيت<small>غداً</small></button>
+      <button class="hard" data-q="3">صعب<small id="g-hard"></small></button>
+      <button class="good" data-q="4">جيد<small id="g-good"></small></button>
+      <button class="easy" data-q="5">سهل<small id="g-easy"></small></button>
+    </div>
+  </div>
+  <div class="card" id="rv-empty" hidden>
+    <b>لا شيء مستحق الآن.</b>
+    <p class="meta">ارجع غداً، أو راجع صفحة بعينها من الخريطة أو المصحف، أو ارفع الحد اليومي من الإعدادات.</p>
+  </div>
+</section>
+
+<section id="tab-test" class="stack" hidden>
+  <div class="card stack">
+    <div class="row">
+      <label>النوع <select id="t-mode">
+        <option value="complete">أكمل الآية</option>
+        <option value="next">ما الآية التي بعدها؟</option>
+        <option value="where">أين موضع هذه الآية؟</option>
+        <option value="mutashabih">المتشابهات (بداية واحدة في عدة مواضع)</option>
+      </select></label>
+      <label>النطاق <select id="t-range"></select></label>
+      <button class="primary" id="t-new">سؤال جديد</button>
+    </div>
+    <div class="meta" id="t-prompt"></div>
+    <div id="t-q" class="quran"></div>
+    <div class="row" style="justify-content:center"><button id="t-reveal">اكشف الجواب</button></div>
+    <div id="t-a" class="quran" hidden></div>
+    <div id="t-a-meta" class="meta" hidden></div>
+    <div class="row" id="t-self" hidden>
+      <span class="meta">كيف كان؟</span>
+      <button data-r="0">أخطأت</button><button data-r="1">تذكرت</button>
+    </div>
+    <div class="meta" id="t-score"></div>
+  </div>
+</section>
+
+<section id="tab-mushaf" class="stack" hidden>
+  <div class="card stack">
+    <div class="row">
+      <label>السورة <select id="m-surah"></select></label>
+      <label>الجزء <select id="m-juz"></select></label>
+      <label>الصفحة <input type="number" id="m-page" min="1" max="604" style="width:80px"></label>
+      <label><input type="checkbox" id="m-hide"> إخفاء الآيات (اضغط آية لكشفها)</label>
+    </div>
+    <div class="pager">
+      <button id="m-prev">الصفحة السابقة</button>
+      <div class="meta" id="m-title"></div>
+      <button id="m-next">الصفحة التالية</button>
+    </div>
+    <div id="m-text" class="quran"></div>
+    <div class="row" style="justify-content:space-between">
+      <span class="meta" id="m-state"></span>
+      <button id="m-review">راجع هذه الصفحة الآن</button>
+    </div>
+  </div>
+</section>
+
+<section id="tab-map" class="stack" hidden>
+  <div class="card stack">
+    <div class="row" style="justify-content:space-between">
+      <b>قوة الحفظ لكل صفحة</b>
+      <div class="legend">
+        <span><i class="s0"></i>لم تُراجَع</span><span><i class="s1"></i>ضعيفة</span><span><i class="s2"></i>متوسطة</span><span><i class="s3"></i>جيدة</span><span><i class="s4"></i>ثابتة</span>
+      </div>
+    </div>
+    <div class="meta">كل مربع صفحة. اضغط على صفحة لفتحها في المصحف. الأجزاء مرتبة من اليمين.</div>
+    <div id="heat" class="heat"></div>
+  </div>
+  <div class="card">
+    <b>الأضعف الآن</b>
+    <div id="weak" class="list" style="margin-top:8px"></div>
+  </div>
+</section>
+
+<section id="tab-settings" class="stack" hidden>
+  <div class="card stack">
+    <label>الحد اليومي للصفحات الجديدة (التي لم تُراجَع بعد) <input type="number" id="s-new" min="1" max="100" style="width:80px"></label>
+    <label>الحد الأقصى للمستحق في اليوم <input type="number" id="s-due" min="5" max="200" style="width:80px"></label>
+    <label>ترتيب الصفحات الجديدة <select id="s-order"><option value="seq">من أول المصحف</option><option value="rev">من آخر المصحف (جزء عمّ أولاً)</option><option value="rand">عشوائي</option></select></label>
+    <label>عدد الكلمات في التلميح <input type="number" id="s-cue" min="2" max="12" style="width:80px"></label>
+    <div class="meta" id="s-sync"></div>
+  </div>
+  <div class="card stack">
+    <b>نسخة احتياطية</b>
+    <div class="row"><button id="s-export">انسخ البيانات (JSON)</button><button id="s-import">الصق بيانات</button><button id="s-reset" style="color:var(--again)">إعادة ضبط التقدم</button></div>
+    <textarea id="s-io" rows="4" style="width:100%;font:12px monospace;direction:ltr" hidden></textarea>
+    <div class="row" id="s-reset-confirm" hidden><span>متأكد؟ سيُحذف كل التقدم.</span><button id="s-reset-yes" style="color:var(--again)">نعم احذف</button><button id="s-reset-no">إلغاء</button></div>
+  </div>
+  <div class="card meta">النص: مصحف المدينة النبوية برواية حفص، خط مجمع الملك فهد (KFGQPC Hafs v3). أرقام الصفحات مطابقة للمصحف المطبوع.</div>
+</section>
+
+</main>
+<footer class="dedication">
+  <div class="quran" style="font-size:20px;text-align:center;text-align-last:center">﴿رَّبِّ ٱرۡحَمۡهُمَا كَمَا رَبَّيَانِي صَغِيرٗا﴾</div>
+  <p>هذا العمل صدقة جارية عن روح أخي <b>أحمد بشير أبو زهرة</b> وجدتي <b>مهدية عبد الفتاح أبو زهرة</b>، رحمهما الله رحمة واسعة وأسكنهما فسيح جناته. اللهم اجعل كل حرف يُتلى ويُراجَع هنا في ميزان حسناتهما، ونوّر قبريهما، واجمعنا بهما في الفردوس الأعلى.</p>
+</footer>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script id="qdata" type="application/json">__DATA__</script>
+<script>
+(function(){
+"use strict";
+const Q = JSON.parse(document.getElementById('qdata').textContent);
+const S = Q.surahs, A = Q.ayahs; // ayah: [surah, num, page, juz, text, plain]
+const PAGES = 604;
+const pageAyahs = Array.from({length:PAGES+1},()=>[]);
+A.forEach((a,i)=>pageAyahs[a[2]].push(i));
+const juzFirstPage = Array(31).fill(0); A.forEach(a=>{ if(!juzFirstPage[a[3]]) juzFirstPage[a[3]]=a[2]; });
+const AR = n => String(n).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+const $ = id => document.getElementById(id);
+const toast = m => { const t=$('toast'); t.textContent=m; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),2200); };
+const todayKey = () => { const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); };
+const dayNum = k => { const [y,m,d]=k.split('-').map(Number); return Math.round(Date.UTC(y,m-1,d)/864e5); };
+const today = () => dayNum(todayKey());
+const keyOf = n => { const d=new Date(n*864e5); return d.getUTCFullYear()+'-'+String(d.getUTCMonth()+1).padStart(2,'0')+'-'+String(d.getUTCDate()).padStart(2,'0'); };
+
+// ---------- state ----------
+const DEF = { pages:{}, days:{}, settings:{newLimit:20, dueLimit:60, order:'seq', cue:5}, tests:{ok:0,bad:0}, updatedAt:0 };
+let state = JSON.parse(JSON.stringify(DEF));
+const LS='hifz-madinah-v1';
+try { const raw=localStorage.getItem(LS); if(raw){ const s=JSON.parse(raw); state=Object.assign({},DEF,s); state.settings=Object.assign({},DEF.settings,s.settings||{}); } } catch(e){}
+let dbDoc=null, dbTimer=null, dbStatus='محلي فقط (المتصفح)';
+function persist(){
+  state.updatedAt=Date.now();
+  try{ localStorage.setItem(LS, JSON.stringify(state)); }catch(e){}
+  if(dbDoc){ clearTimeout(dbTimer); dbTimer=setTimeout(()=>{ dbDoc.set(state).then(()=>{dbStatus='متزامن مع حسابك'; renderSync();}).catch(()=>{dbStatus='تعذّر الحفظ في الحساب، محفوظ محلياً'; renderSync();}); },1200); }
+}
+function renderSync(){ $('s-sync').textContent='الحفظ: '+dbStatus; }
+(async()=>{
+  try{
+    if(!window.claude||!window.claude.use) return;
+    const [db,user]=await Promise.all([claude.use('db'),claude.use('user')]);
+    if(!db||!user) return;
+    const id=await user.id(); if(!id) return;
+    dbDoc=db.doc('data/users/'+id+'/progress');
+    const snap=await dbDoc.get();
+    if(snap.exists){ const r=snap.data(); if((r.updatedAt||0)>(state.updatedAt||0)){ state=Object.assign({},DEF,r); state.settings=Object.assign({},DEF.settings,r.settings||{}); try{localStorage.setItem(LS,JSON.stringify(state));}catch(e){} renderAll(); } else if((state.updatedAt||0)>(r.updatedAt||0)) { dbDoc.set(state).catch(()=>{}); } }
+    else if(Object.keys(state.pages).length){ dbDoc.set(state).catch(()=>{}); }
+    dbStatus='متزامن مع حسابك'; renderSync();
+  }catch(e){}
+})();
+
+// ---------- scheduling (SM-2) ----------
+function rec(p){ return state.pages[p]; }
+function strength(p){ const r=rec(p); if(!r) return 0; if(r.i<4) return 1; if(r.i<12) return 2; if(r.i<21) return 3; return 4; }
+function isDue(p){ const r=rec(p); return r && r.d<=today(); }
+function grade(p,q){
+  const t=today(); let r=rec(p)||{e:2.5,i:0,r:0,l:0,d:0,n:0,lp:0};
+  if(q<3){ r.r=0; r.i=1; r.lp++; }
+  else if(q===3){ r.i=Math.max(1,Math.round(r.i*1.2)); r.r++; }
+  else { if(r.r===0) r.i=(q===5?4:1); else if(r.r===1) r.i=(q===5?7:4); else r.i=Math.round(r.i*r.e*(q===5?1.3:1)); r.r++; }
+  r.e=Math.max(1.3, r.e+(0.1-(5-q)*(0.08+(5-q)*0.02)));
+  r.l=t; r.d=t+r.i; r.n++;
+  state.pages[p]=r;
+  const k=todayKey(); state.days[k]=(state.days[k]||0)+1;
+  persist();
+}
+function previewInterval(p,q){ const r=rec(p); let i=r?r.i:0, rr=r?r.r:0, e=r?r.e:2.5;
+  if(q<3) return 1; if(q===3) return Math.max(1,Math.round(i*1.2)); if(rr===0) return q===5?4:1; if(rr===1) return q===5?7:4; return Math.round(i*e*(q===5?1.3:1)); }
+function fmtDays(n){ if(n===1) return 'غداً'; if(n<7) return AR(n)+' أيام'; if(n<30) return AR(Math.round(n/7))+' أسابيع'; return AR(Math.round(n/30))+' أشهر'; }
+function newOrder(){ const unseen=[]; for(let p=1;p<=PAGES;p++) if(!rec(p)) unseen.push(p);
+  const o=state.settings.order; if(o==='rev') unseen.reverse(); else if(o==='rand'){ for(let i=unseen.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[unseen[i],unseen[j]]=[unseen[j],unseen[i]];} } return unseen; }
+function buildQueue(){
+  const t=today(); const due=[]; for(let p=1;p<=PAGES;p++){ const r=rec(p); if(r&&r.d<=t) due.push(p); }
+  due.sort((a,b)=>(rec(a).d-rec(b).d)||(a-b));
+  const doneToday=state.days[todayKey()]||0;
+  const dueCap=Math.max(0,state.settings.dueLimit-0);
+  const q=due.slice(0,dueCap);
+  const newToday=Math.max(0, state.settings.newLimit - Math.max(0, doneToday - 0));
+  const fresh=newOrder().slice(0, newToday);
+  return {due:q, fresh, dueTotal:due.length, unseen:newOrder().length};
+}
+
+// ---------- rendering helpers ----------
+function ayahHTML(i,hide){ const a=A[i]; return '<span class="ay'+(hide?' hid':'')+'" data-i="'+i+'">'+a[4]+'<span class="n">﴿'+AR(a[1])+'﴾</span></span> '; }
+function pageHTML(p,hide){ let out='', lastS=0; pageAyahs[p].forEach(i=>{ const a=A[i]; if(a[0]!==lastS){ lastS=a[0]; const s=S[a[0]-1]; if(a[1]===1){ out+='<div class="meta" style="text-align:center;margin:8px 0">سورة '+s.ar+'</div>'; if(s.b&&a[0]!==1&&a[0]!==9) out+='<div style="text-align:center">بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ</div>'; } } out+=ayahHTML(i,hide); }); return out; }
+function pageInfo(p){ const ids=pageAyahs[p]; const names=[...new Set(ids.map(i=>S[A[i][0]-1].ar))]; return 'صفحة '+AR(p)+' · جزء '+AR(A[ids[0]][3])+' · '+names.join(' / '); }
+function cueOf(p){ const a=A[pageAyahs[p][0]]; const w=a[4].split(' '); const n=state.settings.cue; return w.slice(0,n).join(' ')+(w.length>n?' …':''); }
+function stateText(p){ const r=rec(p); if(!r) return 'لم تُراجَع بعد'; const d=r.d-today(); return 'آخر مراجعة قبل '+AR(today()-r.l)+' يوم · '+(d<=0?'مستحقة الآن':'القادمة بعد '+fmtDays(d))+' · فترة '+AR(r.i)+' يوم · مرات '+AR(r.n)+(r.lp?' · نسيان '+AR(r.lp):''); }
+
+// ---------- tabs ----------
+let tab='today';
+function showTab(t){ tab=t; document.querySelectorAll('nav [role=tab]').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===t)); ['today','review','test','mushaf','map','settings'].forEach(x=>$('tab-'+x).hidden=x!==t); if(t==='today') renderToday(); if(t==='map') renderMap(); if(t==='review') renderReview(); if(t==='settings') renderSettings(); window.scrollTo(0,0); }
+document.querySelectorAll('nav [role=tab]').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
+
+// ---------- today ----------
+function streak(){ let n=0, d=today(); if(!state.days[keyOf(d)]) d--; while(state.days[keyOf(d)]){ n++; d--; } return n; }
+function renderToday(){
+  const q=buildQueue(); let strong=0; for(let p=1;p<=PAGES;p++) if(strength(p)>=4) strong++;
+  $('st-due').textContent=AR(q.dueTotal); $('st-new').textContent=AR(q.unseen); $('st-done').textContent=AR(state.days[todayKey()]||0); $('st-streak').textContent=AR(streak()); $('st-strong').textContent=AR(Math.round(strong/PAGES*100))+'%';
+  $('today-desc').textContent=q.due.length+q.fresh.length ? 'مستحق: '+AR(q.due.length)+' صفحة · جديد: '+AR(q.fresh.length)+' صفحة' : 'لا شيء مستحق — أحسنت';
+  const l=$('today-list'); l.innerHTML='';
+  [...q.due.map(p=>({p,t:'مستحقة'})),...q.fresh.map(p=>({p,t:'جديدة'}))].slice(0,12).forEach(x=>{ const d=document.createElement('div'); d.className='item'; d.innerHTML='<b>'+pageInfo(x.p)+'</b> <span class="pill">'+x.t+'</span><div class="meta">'+stateText(x.p)+'</div>'; l.appendChild(d); });
+  if(q.due.length+q.fresh.length>12){ const d=document.createElement('div'); d.className='meta'; d.textContent='و '+AR(q.due.length+q.fresh.length-12)+' صفحة أخرى…'; l.appendChild(d); }
+  $('btn-start').disabled=!(q.due.length+q.fresh.length);
+}
+$('btn-start').addEventListener('click',()=>{ session=null; showTab('review'); });
+
+// ---------- review ----------
+let session=null, cur=null;
+function nextPage(){ if(!session){ const q=buildQueue(); session={list:[...q.due,...q.fresh], i:0, total:q.due.length+q.fresh.length}; } while(session.i<session.list.length){ const p=session.list[session.i]; if(!rec(p)||rec(p).d<=today()) return p; session.i++; } return null; }
+function renderReview(){
+  cur=nextPage();
+  $('rv-empty').hidden=!!cur; $('rv-card').hidden=!cur; if(!cur) return;
+  $('rv-pos').textContent=AR(session.i+1)+' / '+AR(session.total);
+  $('rv-info').textContent=pageInfo(cur)+(rec(cur)?'':' · جديدة');
+  $('rv-cue').textContent=cueOf(cur);
+  $('rv-text').hidden=true; $('rv-grades').hidden=true; $('rv-reveal').hidden=false; $('rv-hint').hidden=false;
+}
+$('rv-reveal').addEventListener('click',()=>{ $('rv-text').innerHTML=pageHTML(cur,false); $('rv-text').hidden=false; $('rv-reveal').hidden=true; $('rv-hint').hidden=true;
+  $('g-hard').textContent=fmtDays(previewInterval(cur,3)); $('g-good').textContent=fmtDays(previewInterval(cur,4)); $('g-easy').textContent=fmtDays(previewInterval(cur,5)); $('rv-grades').hidden=false; });
+$('rv-grades').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ grade(cur,+b.dataset.q); session.i++; renderReview(); }));
+$('rv-skip').addEventListener('click',()=>{ session.i++; renderReview(); });
+function reviewSingle(p){ session={list:[p],i:0,total:1}; showTab('review'); }
+
+// ---------- tests ----------
+const rangeSel=$('t-range'); rangeSel.innerHTML='<option value="all">المصحف كله</option><option value="weak">الصفحات الضعيفة</option>'+Array.from({length:30},(_,i)=>'<option value="j'+(i+1)+'">الجزء '+AR(i+1)+'</option>').join('');
+function rangeAyahs(){ const v=rangeSel.value; if(v==='all') return A.map((_,i)=>i); if(v==='weak'){ const out=[]; A.forEach((a,i)=>{ if(rec(a[2])&&strength(a[2])<=2) out.push(i); }); return out.length?out:A.map((_,i)=>i); } const j=+v.slice(1); const out=[]; A.forEach((a,i)=>{ if(a[3]===j) out.push(i); }); return out; }
+let mut=null; function mutashabih(){ if(mut) return mut; const g={}; A.forEach((a,i)=>{ if(a[1]===1&&a[0]!==1&&a[0]!==9&&/^بسم الله/.test(a[5])) return; const w=a[5].split(' '); if(w.length<4) return; const k=w.slice(0,3).join(' '); (g[k]=g[k]||[]).push(i); }); mut=Object.values(g).filter(l=>l.length>=2&&new Set(l.map(i=>A[i][0]+':'+A[i][2])).size>=2); return mut; }
+let tq=null;
+function locOf(i){ const a=A[i]; return S[a[0]-1].ar+' '+AR(a[1])+' · صفحة '+AR(a[2])+' · جزء '+AR(a[3]); }
+function newTest(){
+  const mode=$('t-mode').value; const pool=rangeAyahs(); $('t-a').hidden=true; $('t-a-meta').hidden=true; $('t-self').hidden=true; $('t-reveal').hidden=false;
+  if(mode==='mutashabih'){ const set=mutashabih().filter(l=>l.some(i=>pool.includes(i))); if(!set.length){ $('t-q').textContent='لا متشابهات في هذا النطاق'; return; } const l=set[Math.floor(Math.random()*set.length)]; const w=A[l[0]][5].split(' ').slice(0,3).join(' '); const shown=A[l[0]][4].split(' ').slice(0,3).join(' ');
+    tq={mode,l}; $('t-prompt').textContent='هذه البداية تتكرر في '+AR(l.length)+' مواضع. اذكرها كلها مع تكملة كل موضع:'; $('t-q').innerHTML=shown+' …'; return; }
+  const i=pool[Math.floor(Math.random()*pool.length)]; const a=A[i]; tq={mode,i};
+  if(mode==='complete'){ const w=a[4].split(' '); const n=Math.min(Math.max(2,Math.floor(w.length/3)),6); $('t-prompt').textContent='أكمل الآية:'; $('t-q').innerHTML=w.slice(0,n).join(' ')+' …'; }
+  else if(mode==='next'){ $('t-prompt').textContent='ما الآية التي تليها؟'; $('t-q').innerHTML=a[4]+'<span class="n">﴿'+AR(a[1])+'﴾</span>'; }
+  else { $('t-prompt').textContent='في أي سورة وجزء هذه الآية؟'; $('t-q').innerHTML=a[4]; }
+}
+$('t-new').addEventListener('click',newTest); $('t-mode').addEventListener('change',newTest); rangeSel.addEventListener('change',newTest);
+$('t-reveal').addEventListener('click',()=>{ if(!tq) return; const m=tq.mode; let html='',meta='';
+  if(m==='mutashabih'){ html=tq.l.map(i=>'<div class="item" style="margin-bottom:6px">'+A[i][4]+'<div class="meta" style="font-family:var(--ui)">'+locOf(i)+'</div></div>').join(''); }
+  else if(m==='complete'){ html=A[tq.i][4]; meta=locOf(tq.i); }
+  else if(m==='next'){ const n=tq.i+1<A.length?tq.i+1:null; html=n!==null&&A[n][0]===A[tq.i][0]?A[n][4]+'<span class="n">﴿'+AR(A[n][1])+'﴾</span>':'(آخر آية في السورة) — بعدها سورة '+S[A[n][0]-1].ar; meta=locOf(tq.i); }
+  else { html=''; meta=locOf(tq.i); }
+  $('t-a').innerHTML=html; $('t-a').hidden=!html; $('t-a-meta').textContent=meta; $('t-a-meta').hidden=!meta; $('t-self').hidden=false; $('t-reveal').hidden=true; });
+$('t-self').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ if(+b.dataset.r) state.tests.ok++; else state.tests.bad++; persist(); renderScore(); newTest(); }));
+function renderScore(){ const t=state.tests; $('t-score').textContent=t.ok+t.bad?'النتيجة الكلية: '+AR(t.ok)+' صحيح / '+AR(t.bad)+' خطأ ('+AR(Math.round(t.ok/(t.ok+t.bad)*100))+'%)':''; }
+
+// ---------- mushaf ----------
+let mp=1;
+$('m-surah').innerHTML=S.map(s=>'<option value="'+s.n+'">'+AR(s.n)+' '+s.ar+'</option>').join('');
+$('m-juz').innerHTML=Array.from({length:30},(_,i)=>'<option value="'+(i+1)+'">الجزء '+AR(i+1)+'</option>').join('');
+function renderMushaf(p){ mp=Math.min(PAGES,Math.max(1,p)); $('m-page').value=mp; const hide=$('m-hide').checked; $('m-text').innerHTML=pageHTML(mp,hide); $('m-title').textContent=pageInfo(mp); $('m-state').textContent=stateText(mp);
+  const first=A[pageAyahs[mp][0]]; $('m-surah').value=first[0]; $('m-juz').value=first[3]; try{localStorage.setItem(LS+'-page',mp);}catch(e){} }
+$('m-surah').addEventListener('change',e=>renderMushaf(S[+e.target.value-1].p));
+$('m-juz').addEventListener('change',e=>renderMushaf(juzFirstPage[+e.target.value]));
+$('m-page').addEventListener('change',e=>renderMushaf(+e.target.value));
+$('m-hide').addEventListener('change',()=>renderMushaf(mp));
+$('m-prev').addEventListener('click',()=>renderMushaf(mp-1)); $('m-next').addEventListener('click',()=>renderMushaf(mp+1));
+$('m-text').addEventListener('click',e=>{ const t=e.target.closest('.ay'); if(t) t.classList.remove('hid'); });
+$('m-review').addEventListener('click',()=>reviewSingle(mp));
+try{ mp=+localStorage.getItem(LS+'-page')||1; }catch(e){}
+
+// ---------- map ----------
+function renderMap(){ const h=$('heat'); h.innerHTML=''; for(let p=1;p<=PAGES;p++){ const b=document.createElement('button'); b.className='s'+strength(p); b.textContent=p; b.title='صفحة '+AR(p)+' — '+stateText(p); b.addEventListener('click',()=>{ renderMushaf(p); showTab('mushaf'); }); h.appendChild(b); }
+  const weak=[]; for(let p=1;p<=PAGES;p++){ const r=rec(p); if(r) weak.push({p,s:r.lp*3+(r.e<2?2:0)-r.i/10}); } weak.sort((a,b)=>b.s-a.s); const w=$('weak'); w.innerHTML=weak.slice(0,8).map(x=>'<div class="item"><b>'+pageInfo(x.p)+'</b><div class="meta">'+stateText(x.p)+'</div></div>').join('')||'<div class="meta">لا بيانات بعد — ابدأ المراجعة</div>'; }
+
+// ---------- settings ----------
+function renderSettings(){ const s=state.settings; $('s-new').value=s.newLimit; $('s-due').value=s.dueLimit; $('s-order').value=s.order; $('s-cue').value=s.cue; renderSync(); }
+[['s-new','newLimit'],['s-due','dueLimit'],['s-cue','cue']].forEach(([id,k])=>$(id).addEventListener('change',e=>{ state.settings[k]=Math.max(+e.target.min,Math.min(+e.target.max,+e.target.value||+e.target.min)); persist(); toast('حُفظ'); }));
+$('s-order').addEventListener('change',e=>{ state.settings.order=e.target.value; persist(); toast('حُفظ'); });
+$('s-export').addEventListener('click',()=>{ const io=$('s-io'); io.hidden=false; io.value=JSON.stringify(state); io.select(); try{ navigator.clipboard.writeText(io.value).then(()=>toast('نُسخت البيانات'),()=>toast('حدد النص وانسخه يدوياً')); }catch(e){ toast('حدد النص وانسخه يدوياً'); } });
+$('s-import').addEventListener('click',()=>{ const io=$('s-io'); if(io.hidden){ io.hidden=false; io.value=''; io.placeholder='الصق البيانات هنا ثم اضغط الزر مرة أخرى'; io.focus(); return; } try{ const s=JSON.parse(io.value); if(!s.pages) throw 0; state=Object.assign({},DEF,s); state.settings=Object.assign({},DEF.settings,s.settings||{}); persist(); renderAll(); toast('استُعيدت البيانات'); io.hidden=true; }catch(e){ toast('البيانات غير صالحة'); } });
+$('s-reset').addEventListener('click',()=>$('s-reset-confirm').hidden=false); $('s-reset-no').addEventListener('click',()=>$('s-reset-confirm').hidden=true);
+$('s-reset-yes').addEventListener('click',()=>{ state=JSON.parse(JSON.stringify(DEF)); persist(); $('s-reset-confirm').hidden=true; renderAll(); toast('تمت إعادة الضبط'); });
+
+function renderAll(){ renderToday(); renderMushaf(mp); renderScore(); renderSettings(); if(tab==='map') renderMap(); }
+renderAll(); newTest();
+})();
+</script>
